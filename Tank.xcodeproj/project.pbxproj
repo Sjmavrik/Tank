@@ -53,6 +53,7 @@
 		11ABF68F1F9F6259007B1351 /* TankUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TankUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		11ABF6931F9F6259007B1351 /* TankUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TankUITests.swift; sourceTree = "<group>"; };
 		11ABF6951F9F6259007B1351 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D7D50D31F9F74FC005D6F09 /* TopDown_soldier_tank_body.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TopDown_soldier_tank_body.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +110,7 @@
 				11ABF6731F9F6259007B1351 /* GameScene.swift */,
 				11ABF6751F9F6259007B1351 /* GameViewController.swift */,
 				11ABF6771F9F6259007B1351 /* Main.storyboard */,
+				4D7D50D21F9F74FC005D6F09 /* New Group */,
 				11ABF67A1F9F6259007B1351 /* Assets.xcassets */,
 				11ABF67C1F9F6259007B1351 /* LaunchScreen.storyboard */,
 				11ABF67F1F9F6259007B1351 /* Info.plist */,
@@ -132,6 +134,14 @@
 				11ABF6951F9F6259007B1351 /* Info.plist */,
 			);
 			path = TankUITests;
+			sourceTree = "<group>";
+		};
+		4D7D50D21F9F74FC005D6F09 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				4D7D50D31F9F74FC005D6F09 /* TopDown_soldier_tank_body.png */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -439,10 +449,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7XQZX49NVK;
+				DEVELOPMENT_TEAM = 3M523AM6MF;
 				INFOPLIST_FILE = Tank/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "-.Tank";
+				PRODUCT_BUNDLE_IDENTIFIER = new.Tank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -454,10 +464,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7XQZX49NVK;
+				DEVELOPMENT_TEAM = 3M523AM6MF;
 				INFOPLIST_FILE = Tank/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "-.Tank";
+				PRODUCT_BUNDLE_IDENTIFIER = new.Tank;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
