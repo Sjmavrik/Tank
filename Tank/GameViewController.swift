@@ -34,7 +34,6 @@ class GameViewController: UIViewController {
                     view.presentScene(sceneNode)
                     
                     view.ignoresSiblingOrder = true
-                    
                     view.showsFPS = true
                     view.showsNodeCount = true
                 }
@@ -46,13 +45,10 @@ class GameViewController: UIViewController {
         return true
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
-    }
+   override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    
+           return .landscape
+   }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
