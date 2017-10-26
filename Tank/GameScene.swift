@@ -10,8 +10,7 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    var i = 0
-    var timer: Timer!
+    var moveTimer, fireTimer: Timer!
     var enemies = [SKSpriteNode]()
     var moving: Bool = false
     var touch: UITouch?
@@ -19,41 +18,49 @@ class GameScene: SKScene {
     var tly, dy: CGFloat?
     var yzero: CGFloat = 0
     var xzero: CGFloat = 0
+    let enemyMovement = [CGVector(dx: -200, dy: 0),
+                         CGVector(dx: 200, dy: 0),
+                         CGVector(dx: 0, dy: 200),
+                         CGVector(dx: 0, dy: -200)]
+    var player, enemy : SKSpriteNode?
+
+    private var lastUpdateTime : TimeInterval = 0
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
-    let enemyMovement = [CGVector(dx: -200, dy: 0), CGVector(dx: 200, dy: 0), CGVector(dx: 0, dy: 200), CGVector(dx: 0, dy: -200)]
     
-    private var lastUpdateTime : TimeInterval = 0
-    private var label : SKLabelNode?
-    var player, enemy : SKSpriteNode?
     
     @objc func enemyMoves () {
-        //for i in 0..<enemies.count {
-        timer = Timer.scheduledTimer(timeInterval: TimeInterval((arc4random_uniform(10)+1)/10), target: self, selector: #selector(enemyMoves), userInfo: nil, repeats: false)
-        if i < enemies.count {
-            enemies[i].physicsBody?.velocity = enemyMovement[Int(arc4random_uniform(4))]
-            i += 1
-        } else {
-            i = 0
+        moveTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(enemyMoves), userInfo: nil, repeats: false)
+        for i in 0..<enemies.count {
+            let j = Int(arc4random_uniform(3))
+            if j == 0 {
+                let r = Int(arc4random_uniform(4))
+                enemies[i].physicsBody?.velocity = enemyMovement[r]
+                if r == 0 {enemies[i].run(SKAction.rotate(toAngle: 0 * CGFloat.pi / 180, duration: 0.1, shortestUnitArc: true))}
+                if r == 1 {enemies[i].run(SKAction.rotate(toAngle: 180 * CGFloat.pi / 180, duration: 0.1, shortestUnitArc: true))}
+                if r == 2 {enemies[i].run(SKAction.rotate(toAngle: 270 * CGFloat.pi / 180, duration: 0.1, shortestUnitArc: true))}
+                if r == 3 {enemies[i].run(SKAction.rotate(toAngle: 90 * CGFloat.pi / 180, duration: 0.1, shortestUnitArc: true))}
+            }
         }
     }
     
-    func spawnEnemy () {
+    func spawnEnemy (_ i: Int) {
         enemy = SKSpriteNode(imageNamed: "Tturret")
-        enemy?.position = CGPoint (x: 0, y: 500)
-        enemy?.physicsBody = SKPhysicsBody(texture: (enemy?.texture)!, size: (enemy?.texture?.size())!)
+        enemy?.position = CGPoint (x: i*200, y: 500)
+        enemy?.physicsBody = SKPhysicsBody(rectangleOf: (enemy?.texture?.size())!)
         enemy?.physicsBody?.affectedByGravity = false
         enemy?.physicsBody?.linearDamping = 0
-        //enemy?.physicsBody?.allowsRotation = false
+        enemy?.physicsBody?.allowsRotation = false
+        enemy?.physicsBody?.usesPreciseCollisionDetection = true
         self.addChild(enemy!)
         enemies.append(enemy!)
     }
     
     override func didMove(to view: SKView) {
-        timer = Timer.scheduledTimer(timeInterval: TimeInterval(arc4random_uniform(3)+1), target: self, selector: #selector(enemyMoves), userInfo: nil, repeats: false)
+        moveTimer = Timer.scheduledTimer(timeInterval: TimeInterval(arc4random_uniform(3)+1), target: self, selector: #selector(enemyMoves), userInfo: nil, repeats: false)
         player = childNode(withName: "TankPlayer") as? SKSpriteNode
-        for _ in 1...4 {
-            spawnEnemy()
+        for i in 1...4 {
+            spawnEnemy(i)
         }
     }
     
