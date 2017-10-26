@@ -43,13 +43,17 @@ class GameScene: SKScene {
             tly = touches.first?.location(in: self).y
             dx = (touches.first?.location(in: self).x)! - xzero
             dy = (touches.first?.location(in: self).y)! - yzero
-            if tlx! > xzero && abs(dx!) > abs(dy!) {
+            if tlx! > xzero && abs(dx!) - abs(dy!) > 50 {
+                player?.zRotation = 180 * CGFloat.pi / 180
                 player?.physicsBody?.velocity = CGVector(dx: 200, dy: 0)
-            } else if tlx! < xzero && abs(dx!) > abs(dy!) {
+            } else if tlx! < xzero && abs(dx!) - abs(dy!) > 50 {
+                player?.zRotation = 0 * CGFloat.pi / 180
                 player?.physicsBody?.velocity = CGVector(dx: -200, dy: 0)
-            } else if tly! > yzero && abs(dy!) > abs(dx!) {
+            } else if tly! > yzero && abs(dy!) - abs(dx!) > 50 {
+                player?.zRotation = 270 * CGFloat.pi / 180
                 player?.physicsBody?.velocity = CGVector(dx: 0, dy: 200)
-            } else if tly! < yzero && abs(dy!) > abs(dx!) {
+            } else if tly! < yzero && abs(dy!) - abs(dx!) > 50 {
+                player?.zRotation = 90 * CGFloat.pi / 180
                 player?.physicsBody?.velocity = CGVector(dx: 0, dy: -200)
             }
         }
