@@ -28,10 +28,12 @@ class GameViewController: UIViewController {
                 // Set the scale mode to scale to fit the window
                 sceneNode.scaleMode = .aspectFit
                 
+                sceneNode.physicsBody = SKPhysicsBody(edgeLoopFrom: sceneNode.frame)
+                
                 // Present the scene
                 if let view = self.view as! SKView? {
                     view.presentScene(sceneNode)
-                    
+                    view.showsPhysics = true
                     view.ignoresSiblingOrder = true
                     view.showsFPS = true
                     view.showsNodeCount = true

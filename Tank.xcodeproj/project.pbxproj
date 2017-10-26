@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		11ABF66E1F9F6259007B1351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ABF66D1F9F6259007B1351 /* AppDelegate.swift */; };
 		11ABF6701F9F6259007B1351 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 11ABF66F1F9F6259007B1351 /* GameScene.sks */; };
-		11ABF6721F9F6259007B1351 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 11ABF6711F9F6259007B1351 /* Actions.sks */; };
 		11ABF6741F9F6259007B1351 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ABF6731F9F6259007B1351 /* GameScene.swift */; };
 		11ABF6761F9F6259007B1351 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ABF6751F9F6259007B1351 /* GameViewController.swift */; };
 		11ABF6791F9F6259007B1351 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11ABF6771F9F6259007B1351 /* Main.storyboard */; };
@@ -41,7 +40,6 @@
 		11ABF66A1F9F6259007B1351 /* Tank.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tank.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11ABF66D1F9F6259007B1351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11ABF66F1F9F6259007B1351 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		11ABF6711F9F6259007B1351 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		11ABF6731F9F6259007B1351 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		11ABF6751F9F6259007B1351 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		11ABF6781F9F6259007B1351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -107,11 +105,9 @@
 			children = (
 				11ABF66D1F9F6259007B1351 /* AppDelegate.swift */,
 				11ABF66F1F9F6259007B1351 /* GameScene.sks */,
-				11ABF6711F9F6259007B1351 /* Actions.sks */,
 				11ABF6731F9F6259007B1351 /* GameScene.swift */,
 				11ABF6751F9F6259007B1351 /* GameViewController.swift */,
 				11ABF6771F9F6259007B1351 /* Main.storyboard */,
-				4D7D50D21F9F74FC005D6F09 /* New Group */,
 				11ABF67A1F9F6259007B1351 /* Assets.xcassets */,
 				11ABF67C1F9F6259007B1351 /* LaunchScreen.storyboard */,
 				11ABF67F1F9F6259007B1351 /* Info.plist */,
@@ -136,13 +132,6 @@
 				11ABF6951F9F6259007B1351 /* Info.plist */,
 			);
 			path = TankUITests;
-			sourceTree = "<group>";
-		};
-		4D7D50D21F9F74FC005D6F09 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,7 +246,6 @@
 				4D7D50DC1F9F999C005D6F09 /* MyTileSet.sks in Resources */,
 				11ABF67B1F9F6259007B1351 /* Assets.xcassets in Resources */,
 				11ABF67E1F9F6259007B1351 /* LaunchScreen.storyboard in Resources */,
-				11ABF6721F9F6259007B1351 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

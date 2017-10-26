@@ -10,6 +10,9 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    var i = 0
+    var timer: Timer!
+    var enemies = [SKSpriteNode]()
     var moving: Bool = false
     var touch: UITouch?
     var tlx, dx: CGFloat?
@@ -18,16 +21,42 @@ class GameScene: SKScene {
     var xzero: CGFloat = 0
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
+    let enemyMovement = [CGVector(dx: -200, dy: 0), CGVector(dx: 200, dy: 0), CGVector(dx: 0, dy: 200), CGVector(dx: 0, dy: -200)]
     
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
-    var player: SKSpriteNode?
+    var player, enemy : SKSpriteNode?
     
-    override func sceneDidLoad() {
-        player = childNode(withName: "TankPlayer") as? SKSpriteNode
-        
+    @objc func enemyMoves () {
+        //for i in 0..<enemies.count {
+        timer = Timer.scheduledTimer(timeInterval: TimeInterval((arc4random_uniform(10)+1)/10), target: self, selector: #selector(enemyMoves), userInfo: nil, repeats: false)
+        if i < enemies.count {
+            enemies[i].physicsBody?.velocity = enemyMovement[Int(arc4random_uniform(4))]
+            i += 1
+        } else {
+            i = 0
+        }
     }
- 
+    
+    func spawnEnemy () {
+        enemy = SKSpriteNode(imageNamed: "Tturret")
+        enemy?.position = CGPoint (x: 0, y: 500)
+        enemy?.physicsBody = SKPhysicsBody(texture: (enemy?.texture)!, size: (enemy?.texture?.size())!)
+        enemy?.physicsBody?.affectedByGravity = false
+        enemy?.physicsBody?.linearDamping = 0
+        //enemy?.physicsBody?.allowsRotation = false
+        self.addChild(enemy!)
+        enemies.append(enemy!)
+    }
+    
+    override func didMove(to view: SKView) {
+        timer = Timer.scheduledTimer(timeInterval: TimeInterval(arc4random_uniform(3)+1), target: self, selector: #selector(enemyMoves), userInfo: nil, repeats: false)
+        player = childNode(withName: "TankPlayer") as? SKSpriteNode
+        for _ in 1...4 {
+            spawnEnemy()
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if moving == false {
             touch = touches.first
