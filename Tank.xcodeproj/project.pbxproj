@@ -17,6 +17,7 @@
 		11ABF6891F9F6259007B1351 /* TankTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ABF6881F9F6259007B1351 /* TankTests.swift */; };
 		11ABF6941F9F6259007B1351 /* TankUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ABF6931F9F6259007B1351 /* TankUITests.swift */; };
 		4D7D50DC1F9F999C005D6F09 /* MyTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4D7D50DB1F9F999C005D6F09 /* MyTileSet.sks */; };
+		4D9387611FA3F3AE00984096 /* GameScene2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4D9387601FA3F3AE00984096 /* GameScene2.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		11ABF6931F9F6259007B1351 /* TankUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TankUITests.swift; sourceTree = "<group>"; };
 		11ABF6951F9F6259007B1351 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D7D50DB1F9F999C005D6F09 /* MyTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyTileSet.sks; sourceTree = "<group>"; };
+		4D9387601FA3F3AE00984096 /* GameScene2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene2.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				11ABF67C1F9F6259007B1351 /* LaunchScreen.storyboard */,
 				11ABF67F1F9F6259007B1351 /* Info.plist */,
 				4D7D50DB1F9F999C005D6F09 /* MyTileSet.sks */,
+				4D9387601FA3F3AE00984096 /* GameScene2.sks */,
 			);
 			path = Tank;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 				4D7D50DC1F9F999C005D6F09 /* MyTileSet.sks in Resources */,
 				11ABF67B1F9F6259007B1351 /* Assets.xcassets in Resources */,
 				11ABF67E1F9F6259007B1351 /* LaunchScreen.storyboard in Resources */,
+				4D9387611FA3F3AE00984096 /* GameScene2.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

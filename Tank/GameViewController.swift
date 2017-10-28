@@ -29,6 +29,7 @@ class GameViewController: UIViewController {
                 sceneNode.scaleMode = .aspectFit
                 
                 sceneNode.physicsBody = SKPhysicsBody(edgeLoopFrom: sceneNode.frame)
+                sceneNode.physicsBody?.restitution = 0
                 
                 // Present the scene
                 if let view = self.view as! SKView? {
