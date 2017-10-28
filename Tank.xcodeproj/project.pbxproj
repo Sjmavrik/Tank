@@ -17,6 +17,7 @@
 		11ABF6891F9F6259007B1351 /* TankTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ABF6881F9F6259007B1351 /* TankTests.swift */; };
 		11ABF6941F9F6259007B1351 /* TankUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ABF6931F9F6259007B1351 /* TankUITests.swift */; };
 		4D7D50DC1F9F999C005D6F09 /* MyTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4D7D50DB1F9F999C005D6F09 /* MyTileSet.sks */; };
+		4D920F561FA52CEA00D5BB4D /* Classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D920F551FA52CEA00D5BB4D /* Classes.swift */; };
 		4D9387611FA3F3AE00984096 /* GameScene2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4D9387601FA3F3AE00984096 /* GameScene2.sks */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		11ABF6931F9F6259007B1351 /* TankUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TankUITests.swift; sourceTree = "<group>"; };
 		11ABF6951F9F6259007B1351 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D7D50DB1F9F999C005D6F09 /* MyTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyTileSet.sks; sourceTree = "<group>"; };
+		4D920F551FA52CEA00D5BB4D /* Classes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classes.swift; sourceTree = "<group>"; };
 		4D9387601FA3F3AE00984096 /* GameScene2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene2.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,16 +107,17 @@
 		11ABF66C1F9F6259007B1351 /* Tank */ = {
 			isa = PBXGroup;
 			children = (
+				11ABF67A1F9F6259007B1351 /* Assets.xcassets */,
 				11ABF66D1F9F6259007B1351 /* AppDelegate.swift */,
+				4D920F551FA52CEA00D5BB4D /* Classes.swift */,
 				11ABF66F1F9F6259007B1351 /* GameScene.sks */,
+				4D9387601FA3F3AE00984096 /* GameScene2.sks */,
 				11ABF6731F9F6259007B1351 /* GameScene.swift */,
 				11ABF6751F9F6259007B1351 /* GameViewController.swift */,
-				11ABF6771F9F6259007B1351 /* Main.storyboard */,
-				11ABF67A1F9F6259007B1351 /* Assets.xcassets */,
-				11ABF67C1F9F6259007B1351 /* LaunchScreen.storyboard */,
 				11ABF67F1F9F6259007B1351 /* Info.plist */,
+				11ABF67C1F9F6259007B1351 /* LaunchScreen.storyboard */,
+				11ABF6771F9F6259007B1351 /* Main.storyboard */,
 				4D7D50DB1F9F999C005D6F09 /* MyTileSet.sks */,
-				4D9387601FA3F3AE00984096 /* GameScene2.sks */,
 			);
 			path = Tank;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 			files = (
 				11ABF6741F9F6259007B1351 /* GameScene.swift in Sources */,
 				11ABF6761F9F6259007B1351 /* GameViewController.swift in Sources */,
+				4D920F561FA52CEA00D5BB4D /* Classes.swift in Sources */,
 				11ABF66E1F9F6259007B1351 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
