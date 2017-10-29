@@ -32,8 +32,15 @@ class GameScene: SKScene {
         }
     }
     
+    override func sceneDidLoad() {
+        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        physicsBody?.restitution = 0
+        currentScene = self as GameScene
+        scaleMode = .aspectFit
+    }
+    
     func spawnEnemy(_ i: Int) {
-        let enemy = Enemy(from: "Tturret", addTo: self)
+        let enemy = Enemy(from: "Tturret")
         enemy.spawn(at: i)
     }
     
@@ -111,6 +118,18 @@ class GameScene: SKScene {
         }
         
         self.lastUpdateTime = currentTime
+        
+        //scene change
+        
+        /*var enemies = [Enemy]()
+        for child in children {
+            if child is Enemy {
+                enemies.append(child as! Enemy)
+            }
+        }
+        if enemies.count == 0 {
+            view?.presentScene(GameScene(fileNamed: "GameScene2"))
+        }*/
     }
 }
 

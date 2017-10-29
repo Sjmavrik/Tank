@@ -10,6 +10,8 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
+var currentScene = SKScene()
+
 class GameViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -26,10 +28,10 @@ class GameViewController: UIViewController {
                 sceneNode.graphs = scene.graphs
                 
                 // Set the scale mode to scale to fit the window
-                sceneNode.scaleMode = .aspectFit
+                //sceneNode.scaleMode = .aspectFit
                 
-                sceneNode.physicsBody = SKPhysicsBody(edgeLoopFrom: sceneNode.frame)
-                sceneNode.physicsBody?.restitution = 0
+                //sceneNode.physicsBody = SKPhysicsBody(edgeLoopFrom: sceneNode.frame)
+                //sceneNode.physicsBody?.restitution = 0
                 
                 // Present the scene
                 if let view = self.view as! SKView? {

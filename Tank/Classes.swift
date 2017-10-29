@@ -10,7 +10,6 @@ import SpriteKit
 
 class Enemy: SKSpriteNode {
     
-    weak var currentScene: GameScene?
     var moveTimer = Timer()
     var fireTimer = Timer()
     let enemyMovement = [CGVector(dx: -200, dy: 0),
@@ -21,16 +20,16 @@ class Enemy: SKSpriteNode {
                               CGPoint(x: 0, y: 800),
                               CGPoint(x: 800, y: 800)]
     
-    init(from textureName: String, addTo scene: SKScene) {
+    init(from textureName: String) {
         let texture = SKTexture(imageNamed: textureName)
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
+        isUserInteractionEnabled = true
         physicsBody = SKPhysicsBody(rectangleOf: texture.size())
         physicsBody?.affectedByGravity = false
         physicsBody?.linearDamping = 0
         physicsBody?.allowsRotation = false
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.restitution = 0
-        currentScene = scene as? GameScene
         moveTimer = Timer.scheduledTimer(timeInterval: TimeInterval(arc4random_uniform(3)+1), target: self, selector: #selector(movement), userInfo: nil, repeats: false)
     }
     
@@ -44,7 +43,7 @@ class Enemy: SKSpriteNode {
     
     func spawn(at position: Int) {
         self.position = enemySpawnPosition[position]
-        currentScene?.addChild(self)
+        currentScene.addChild(self)
     }
     
     @objc func movement() {
