@@ -30,6 +30,7 @@ class Enemy: SKSpriteNode {
         physicsBody?.allowsRotation = false
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.restitution = 0
+        isUserInteractionEnabled = true
         moveTimer = Timer.scheduledTimer(timeInterval: TimeInterval(arc4random_uniform(3)+1), target: self, selector: #selector(movementDirection), userInfo: nil, repeats: false)
     }
     
@@ -69,6 +70,10 @@ class Enemy: SKSpriteNode {
     
     func updateMovement() {
         physicsBody?.velocity = enemyMovement[r]
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        destroy()
     }
     
 }
