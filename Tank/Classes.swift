@@ -10,6 +10,7 @@ import SpriteKit
 
 class Enemy: SKSpriteNode {
     
+    var r = Int()
     var moveTimer = Timer()
     var fireTimer = Timer()
     let enemyMovement = [CGVector(dx: -200, dy: 0),
@@ -29,7 +30,7 @@ class Enemy: SKSpriteNode {
         physicsBody?.allowsRotation = false
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.restitution = 0
-        moveTimer = Timer.scheduledTimer(timeInterval: TimeInterval(arc4random_uniform(3)+1), target: self, selector: #selector(movement), userInfo: nil, repeats: false)
+        moveTimer = Timer.scheduledTimer(timeInterval: TimeInterval(arc4random_uniform(3)+1), target: self, selector: #selector(movementDirection), userInfo: nil, repeats: false)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,12 +46,11 @@ class Enemy: SKSpriteNode {
         currentScene.addChild(self)
     }
     
-    @objc func movement() {
-        moveTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(movement), userInfo: nil, repeats: false)
+    @objc func movementDirection() {
+        moveTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(movementDirection), userInfo: nil, repeats: false)
         let j = Int(arc4random_uniform(3))
         if j == 0 {
-            let r = Int(arc4random_uniform(4))
-            physicsBody?.velocity = enemyMovement[r]
+            r = Int(arc4random_uniform(4))
             if r == 0 {run(SKAction.rotate(toAngle: 0 * CGFloat.pi / 180, duration: 0.1, shortestUnitArc: true))}
             if r == 1 {run(SKAction.rotate(toAngle: 180 * CGFloat.pi / 180, duration: 0.1, shortestUnitArc: true))}
             if r == 2 {run(SKAction.rotate(toAngle: 270 * CGFloat.pi / 180, duration: 0.1, shortestUnitArc: true))}
@@ -65,6 +65,10 @@ class Enemy: SKSpriteNode {
     func destroy() {
         removeFromParent()
         moveTimer.invalidate()
+    }
+    
+    func updateMovement() {
+        physicsBody?.velocity = enemyMovement[r]
     }
     
 }

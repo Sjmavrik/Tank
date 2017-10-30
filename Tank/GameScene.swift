@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    var playerVelocityVector = CGVector()
     var i = 0
     var timerRepeatFire = Timer()
     var moving: Bool = false
@@ -76,16 +77,20 @@ class GameScene: SKScene {
             let dy = (touches.first?.location(in: self).y)! - yzero
             if tlx! > xzero && abs(dx) - abs(dy) > 50 {
                 player?.zRotation = 180 * CGFloat.pi / 180
-                player?.physicsBody?.velocity = CGVector(dx: 200, dy: 0)
+                playerVelocityVector = CGVector(dx: 200, dy: 0)
+                //player?.physicsBody?.velocity = CGVector(dx: 200, dy: 0)
             } else if tlx! < xzero && abs(dx) - abs(dy) > 50 {
                 player?.zRotation = 0 * CGFloat.pi / 180
-                player?.physicsBody?.velocity = CGVector(dx: -200, dy: 0)
+                playerVelocityVector = CGVector(dx: -200, dy: 0)
+                //player?.physicsBody?.velocity = CGVector(dx: -200, dy: 0)
             } else if tly! > yzero && abs(dy) - abs(dx) > 50 {
                 player?.zRotation = 270 * CGFloat.pi / 180
-                player?.physicsBody?.velocity = CGVector(dx: 0, dy: 200)
+                playerVelocityVector = CGVector(dx: 0, dy: 200)
+                //player?.physicsBody?.velocity = CGVector(dx: 0, dy: 200)
             } else if tly! < yzero && abs(dy) - abs(dx) > 50 {
                 player?.zRotation = 90 * CGFloat.pi / 180
-                player?.physicsBody?.velocity = CGVector(dx: 0, dy: -200)
+                playerVelocityVector = CGVector(dx: 0, dy: -200)
+                //player?.physicsBody?.velocity = CGVector(dx: 0, dy: -200)
             }
         }
     }
@@ -93,7 +98,7 @@ class GameScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touch == touches.first {
             moving = false
-            player?.physicsBody?.velocity = CGVector (dx: 0, dy: 0)
+            playerVelocityVector = CGVector (dx: 0, dy: 0)
         } else if touchR == touches.first {
             shooting = false
             timerRepeatFire.invalidate()
@@ -119,17 +124,26 @@ class GameScene: SKScene {
         
         self.lastUpdateTime = currentTime
         
-        //scene change
+        player?.physicsBody?.velocity = playerVelocityVector
         
-        /*var enemies = [Enemy]()
         for child in children {
             if child is Enemy {
-                enemies.append(child as! Enemy)
+                (child as! Enemy).updateMovement()
+            }
+        }
+        
+        //scene change
+        
+        var enemies = [Enemy]()
+        for child in children {
+            if child is Enemy {
+                 enemies.append(child as! Enemy)
+                 (child as! Enemy).updateMovement()
             }
         }
         if enemies.count == 0 {
             view?.presentScene(GameScene(fileNamed: "GameScene2"))
-        }*/
+        }
     }
 }
 
