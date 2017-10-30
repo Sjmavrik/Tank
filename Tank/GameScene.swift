@@ -10,12 +10,17 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    var playerVelocityVector = CGVector()
+    var i = 0
+    var timerRepeatFire = Timer()
     var moving: Bool = false
-    var touch: UITouch?
-    var tlx, dx: CGFloat?
-    var tly, dy: CGFloat?
+    var shooting: Bool = false
+    var touch, touchR: UITouch?
     var yzero: CGFloat = 0
     var xzero: CGFloat = 0
+    var player: SKSpriteNode?
+    
+    private var lastUpdateTime : TimeInterval = 0
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
@@ -24,7 +29,8 @@ class GameScene: SKScene {
     var player: SKSpriteNode?
     var bullet: SKSpriteNode?
     
-    override func sceneDidLoad() {
+    
+    override func didMove(to view: SKView) {
         player = childNode(withName: "TankPlayer") as? SKSpriteNode
         bullet = SKSpriteNode (imageNamed: "Bullet")
         bullet?.position = CGPoint (x:950, y:100)
@@ -32,34 +38,47 @@ class GameScene: SKScene {
         bullet?.zRotation = 270 * CGFloat.pi / 180
         self.addChild(bullet!)
     }
- 
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if moving == false {
-            touch = touches.first
-            moving = true
-            xzero = (touch?.location(in: self).x)!
-            yzero = (touch?.location(in: self).y)!
+        print(event?.allTouches?.count as Any)
+        if (touches.first?.location(in: self).x)! < 0 {
+            if moving == false {
+                touch = touches.first
+                moving = true
+                xzero = (touch?.location(in: self).x)!
+                yzero = (touch?.location(in: self).y)!
+            }
+        } else {
+            if shooting == false {
+                shooting = true
+                touchR = touches.first
+                shoot ()
+            }
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touch == touches.first {
-            tlx = touches.first?.location(in: self).x
-            tly = touches.first?.location(in: self).y
-            dx = (touches.first?.location(in: self).x)! - xzero
-            dy = (touches.first?.location(in: self).y)! - yzero
-            if tlx! > xzero && abs(dx!) - abs(dy!) > 50 {
+            let tlx = touches.first?.location(in: self).x
+            let tly = touches.first?.location(in: self).y
+            let dx = (touches.first?.location(in: self).x)! - xzero
+            let dy = (touches.first?.location(in: self).y)! - yzero
+            if tlx! > xzero && abs(dx) - abs(dy) > 50 {
                 player?.zRotation = 180 * CGFloat.pi / 180
-                player?.physicsBody?.velocity = CGVector(dx: 200, dy: 0)
-            } else if tlx! < xzero && abs(dx!) - abs(dy!) > 50 {
+                playerVelocityVector = CGVector(dx: 200, dy: 0)
+                //player?.physicsBody?.velocity = CGVector(dx: 200, dy: 0)
+            } else if tlx! < xzero && abs(dx) - abs(dy) > 50 {
                 player?.zRotation = 0 * CGFloat.pi / 180
-                player?.physicsBody?.velocity = CGVector(dx: -200, dy: 0)
-            } else if tly! > yzero && abs(dy!) - abs(dx!) > 50 {
+                playerVelocityVector = CGVector(dx: -200, dy: 0)
+                //player?.physicsBody?.velocity = CGVector(dx: -200, dy: 0)
+            } else if tly! > yzero && abs(dy) - abs(dx) > 50 {
                 player?.zRotation = 270 * CGFloat.pi / 180
-                player?.physicsBody?.velocity = CGVector(dx: 0, dy: 200)
-            } else if tly! < yzero && abs(dy!) - abs(dx!) > 50 {
+                playerVelocityVector = CGVector(dx: 0, dy: 200)
+                //player?.physicsBody?.velocity = CGVector(dx: 0, dy: 200)
+            } else if tly! < yzero && abs(dy) - abs(dx) > 50 {
                 player?.zRotation = 90 * CGFloat.pi / 180
-                player?.physicsBody?.velocity = CGVector(dx: 0, dy: -200)
+                playerVelocityVector = CGVector(dx: 0, dy: -200)
+                //player?.physicsBody?.velocity = CGVector(dx: 0, dy: -200)
             }
         }
     }
@@ -67,10 +86,13 @@ class GameScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touch == touches.first {
             moving = false
-            player?.physicsBody?.velocity = CGVector (dx: 0, dy: 0)
+            playerVelocityVector = CGVector (dx: 0, dy: 0)
+        } else if touchR == touches.first {
+            shooting = false
+            timerRepeatFire.invalidate()
         }
     }
-   
+    
     
     
     override func update(_ currentTime: TimeInterval) {
@@ -89,6 +111,28 @@ class GameScene: SKScene {
         }
         
         self.lastUpdateTime = currentTime
+        
+        player?.physicsBody?.velocity = playerVelocityVector
+        
+        for child in children {
+            if child is Enemy {
+                (child as! Enemy).updateMovement()
+            }
+        }
+        
+        //scene change
+        
+        var enemies = [Enemy]()
+        for child in children {
+            if child is Enemy {
+                 enemies.append(child as! Enemy)
+                 (child as! Enemy).updateMovement()
+            }
+        }
+        if enemies.count == 0 {
+            view?.presentScene(GameScene(fileNamed: "GameScene2"))
+        }
     }
     
 }
+
