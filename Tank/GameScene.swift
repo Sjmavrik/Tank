@@ -22,10 +22,15 @@ class GameScene: SKScene {
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     var player: SKSpriteNode?
+    var bullet: SKSpriteNode?
     
     override func sceneDidLoad() {
         player = childNode(withName: "TankPlayer") as? SKSpriteNode
-        
+        bullet = SKSpriteNode (imageNamed: "Bullet")
+        bullet?.position = CGPoint (x:950, y:100)
+        bullet?.size = CGSize(width: 100, height: 50)
+        bullet?.zRotation = 270 * CGFloat.pi / 180
+        self.addChild(bullet!)
     }
  
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -85,4 +90,5 @@ class GameScene: SKScene {
         
         self.lastUpdateTime = currentTime
     }
+    
 }
