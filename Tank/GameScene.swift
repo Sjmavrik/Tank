@@ -24,14 +24,14 @@ class GameScene: SKScene {
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
-    private var lastUpdateTime : TimeInterval = 0
-    private var label : SKLabelNode?
-    var player: SKSpriteNode?
     var bullet: SKSpriteNode?
     
     
     override func didMove(to view: SKView) {
         player = childNode(withName: "TankPlayer") as? SKSpriteNode
+        for i in 0...2 {
+            spawnEnemy(i)
+        }
         bullet = SKSpriteNode (imageNamed: "Bullet")
         bullet?.position = CGPoint (x:950, y:100)
         bullet?.size = CGSize(width: 100, height: 50)
@@ -39,8 +39,25 @@ class GameScene: SKScene {
         self.addChild(bullet!)
     }
     
+    override func sceneDidLoad() {
+        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        physicsBody?.restitution = 0
+        currentScene = self as GameScene
+        scaleMode = .aspectFit
+    }
+    
+    func spawnEnemy(_ i: Int) {
+        let enemy = Enemy(from: "Tturret")
+        enemy.spawn(at: i)
+    }
+    
+    @objc func shoot() {
+        print("didShoot \(i)")
+        i+=1
+        timerRepeatFire = Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(shoot), userInfo: nil, repeats: false)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print(event?.allTouches?.count as Any)
         if (touches.first?.location(in: self).x)! < 0 {
             if moving == false {
                 touch = touches.first
@@ -114,11 +131,11 @@ class GameScene: SKScene {
         
         player?.physicsBody?.velocity = playerVelocityVector
         
-        for child in children {
+        /*for child in children {
             if child is Enemy {
                 (child as! Enemy).updateMovement()
             }
-        }
+        }*/
         
         //scene change
         
