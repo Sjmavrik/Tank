@@ -24,7 +24,6 @@ class GameScene: SKScene {
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
-    var bullet: SKSpriteNode?
     
     
     override func didMove(to view: SKView) {
@@ -32,11 +31,6 @@ class GameScene: SKScene {
         for i in 0...2 {
             spawnEnemy(i)
         }
-        bullet = SKSpriteNode (imageNamed: "Bullet")
-        bullet?.position = CGPoint (x:950, y:100)
-        bullet?.size = CGSize(width: 100, height: 50)
-        bullet?.zRotation = 270 * CGFloat.pi / 180
-        self.addChild(bullet!)
     }
     
     override func sceneDidLoad() {
@@ -52,9 +46,8 @@ class GameScene: SKScene {
     }
     
     @objc func shoot() {
-        print("didShoot \(i)")
-        i+=1
         timerRepeatFire = Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(shoot), userInfo: nil, repeats: false)
+        _ = Bullet(at: (player?.position)!, with: (player?.zRotation)!)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -81,21 +74,17 @@ class GameScene: SKScene {
             let dx = (touches.first?.location(in: self).x)! - xzero
             let dy = (touches.first?.location(in: self).y)! - yzero
             if tlx! > xzero && abs(dx) - abs(dy) > 50 {
-                player?.zRotation = 180 * CGFloat.pi / 180
+                player?.zRotation = -90 * CGFloat.pi / 180
                 playerVelocityVector = CGVector(dx: 200, dy: 0)
-                //player?.physicsBody?.velocity = CGVector(dx: 200, dy: 0)
             } else if tlx! < xzero && abs(dx) - abs(dy) > 50 {
-                player?.zRotation = 0 * CGFloat.pi / 180
-                playerVelocityVector = CGVector(dx: -200, dy: 0)
-                //player?.physicsBody?.velocity = CGVector(dx: -200, dy: 0)
-            } else if tly! > yzero && abs(dy) - abs(dx) > 50 {
-                player?.zRotation = 270 * CGFloat.pi / 180
-                playerVelocityVector = CGVector(dx: 0, dy: 200)
-                //player?.physicsBody?.velocity = CGVector(dx: 0, dy: 200)
-            } else if tly! < yzero && abs(dy) - abs(dx) > 50 {
                 player?.zRotation = 90 * CGFloat.pi / 180
+                playerVelocityVector = CGVector(dx: -200, dy: 0)
+            } else if tly! > yzero && abs(dy) - abs(dx) > 50 {
+                player?.zRotation = 0 * CGFloat.pi / 180
+                playerVelocityVector = CGVector(dx: 0, dy: 200)
+            } else if tly! < yzero && abs(dy) - abs(dx) > 50 {
+                player?.zRotation = 180 * CGFloat.pi / 180
                 playerVelocityVector = CGVector(dx: 0, dy: -200)
-                //player?.physicsBody?.velocity = CGVector(dx: 0, dy: -200)
             }
         }
     }
@@ -108,6 +97,13 @@ class GameScene: SKScene {
             shooting = false
             timerRepeatFire.invalidate()
         }
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+            moving = false
+            playerVelocityVector = CGVector (dx: 0, dy: 0)
+            shooting = false
+            timerRepeatFire.invalidate()
     }
     
     
@@ -130,12 +126,6 @@ class GameScene: SKScene {
         self.lastUpdateTime = currentTime
         
         player?.physicsBody?.velocity = playerVelocityVector
-        
-        /*for child in children {
-            if child is Enemy {
-                (child as! Enemy).updateMovement()
-            }
-        }*/
         
         //scene change
         
