@@ -9,7 +9,7 @@
 import SpriteKit
 
 class Enemy: SKSpriteNode {
-    
+    var hp = 1
     var r = Int()
     var moveTimer = Timer()
     var fireTimer = Timer()
@@ -30,6 +30,8 @@ class Enemy: SKSpriteNode {
         physicsBody?.allowsRotation = false
         physicsBody?.usesPreciseCollisionDetection = false
         physicsBody?.restitution = 0
+        physicsBody?.categoryBitMask = (currentScene as! GameScene).EnemyCategory
+        physicsBody?.contactTestBitMask = (currentScene as! GameScene).BulletCategory
         moveTimer = Timer.scheduledTimer(timeInterval: TimeInterval(arc4random_uniform(3)+1), target: self, selector: #selector(movementDirection), userInfo: nil, repeats: false)
     }
     
@@ -63,8 +65,11 @@ class Enemy: SKSpriteNode {
     }
     
     func destroy() {
-        removeFromParent()
-        moveTimer.invalidate()
+        hp -= 1
+        if hp <= 0 {
+            removeFromParent()
+            moveTimer.invalidate()
+        }
     }
     
     func updateMovement() {
@@ -88,8 +93,9 @@ class Bullet: SKSpriteNode {
         physicsBody?.allowsRotation = false
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.restitution = 0
-        physicsBody?.categoryBitMask = 0
         physicsBody?.collisionBitMask = 0
+        physicsBody?.categoryBitMask = (currentScene as! GameScene).BulletCategory
+        physicsBody?.contactTestBitMask = (currentScene as! GameScene).EnemyCategory
         currentScene.addChild(self)
         physicsBody?.velocity = CGVector(dx: -1000*sin(self.zRotation), dy: 1000*cos(self.zRotation))
         _ = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(destroy), userInfo: nil, repeats: false)

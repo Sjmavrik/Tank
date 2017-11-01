@@ -9,7 +9,11 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
+    let PlayerCategory   : UInt32 = 0x1 << 0
+    let BulletCategory : UInt32 = 0x1 << 1
+    let EnemyCategory  : UInt32 = 0x1 << 2
+    let EnemyBulletCategory : UInt32 = 0x1 << 3
     var playerVelocityVector = CGVector()
     var i = 0
     var timerRepeatFire = Timer()
@@ -28,12 +32,15 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         player = childNode(withName: "TankPlayer") as? SKSpriteNode
+        player?.physicsBody?.categoryBitMask = PlayerCategory
+        player?.physicsBody?.collisionBitMask = EnemyCategory
         for i in 0...2 {
             spawnEnemy(i)
         }
     }
     
     override func sceneDidLoad() {
+        physicsWorld.contactDelegate = self
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsBody?.restitution = 0
         currentScene = self as GameScene
@@ -106,7 +113,22 @@ class GameScene: SKScene {
             timerRepeatFire.invalidate()
     }
     
-    
+    func didBegin(_ contact: SKPhysicsContact) {
+        var firstBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        if firstBody.categoryBitMask == BulletCategory && secondBody.categoryBitMask == EnemyCategory {
+            (firstBody.node as! Bullet).destroy()
+            (secondBody.node as! Enemy).destroy()
+        }
+    }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
@@ -137,9 +159,9 @@ class GameScene: SKScene {
             }
         }
         if enemies.count == 0 {
+            timerRepeatFire.invalidate()
             view?.presentScene(GameScene(fileNamed: "GameScene2"))
         }
     }
-    
 }
 
