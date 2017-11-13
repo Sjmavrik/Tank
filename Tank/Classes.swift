@@ -25,6 +25,7 @@ class Enemy: SKSpriteNode {
     init(from textureName: String) {
         let texture = SKTexture(imageNamed: textureName)
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
+        self.setScale(0.3)
         physicsBody = SKPhysicsBody(rectangleOf: texture.size())
         physicsBody?.affectedByGravity = false
         physicsBody?.linearDamping = 0

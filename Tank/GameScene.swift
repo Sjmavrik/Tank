@@ -48,7 +48,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func spawnEnemy(_ i: Int) {
-        let enemy = Enemy(from: "Tturret")
+        let enemy = Enemy(from: "VTank")
         enemy.spawn(at: i)
     }
     
