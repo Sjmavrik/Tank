@@ -65,11 +65,7 @@ class Enemy: SKSpriteNode {
             if r == 1 {self.zRotation = 180 * CGFloat.pi / 180
                 enemyVelocityVector = CGVector(dx: 0, dy: -200)}
             shoot()
-            /*if r == 0 {run(SKAction.rotate(toAngle: 0 * CGFloat.pi / 180, duration: 0.1, shortestUnitArc: true))}
-            if r == 1 {run(SKAction.rotate(toAngle: 180 * CGFloat.pi / 180, duration: 0.1, shortestUnitArc: true))}
-            if r == 2 {run(SKAction.rotate(toAngle: 270 * CGFloat.pi / 180, duration: 0.1, shortestUnitArc: true))}
-            if r == 3 {run(SKAction.rotate(toAngle: 90 * CGFloat.pi / 180, duration: 0.1, shortestUnitArc: true))}
-            if !hasActions() {shoot()}*/
+           
         }
     }
     

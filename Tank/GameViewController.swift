@@ -14,6 +14,7 @@ weak var currentScene: GameScene?
 
 class GameViewController: UIViewController {
 
+    let hpBar = UILabel ()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
@@ -43,6 +44,11 @@ class GameViewController: UIViewController {
                 }
             }
         }
+        self.hpBar.frame = CGRect (x: view.frame.size.width - 100, y: 70, width: 100, height: 50)
+        self.hpBar.text = "HP = \((currentScene?.player2.hp)!)"
+        self.hpBar.textColor = UIColor.blue
+        self.hpBar.autoresizesSubviews = true
+        self.view.addSubview(self.hpBar)
     }
 
     override var shouldAutorotate: Bool {
