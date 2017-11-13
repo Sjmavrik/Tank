@@ -24,9 +24,8 @@ class Enemy: SKSpriteNode {
     
     init(from textureName: String) {
         let texture = SKTexture(imageNamed: textureName)
-        super.init(texture: texture, color: UIColor.clear, size: texture.size())
-        self.setScale(0.3)
-        physicsBody = SKPhysicsBody(rectangleOf: texture.size())
+        super.init(texture: texture, color: UIColor.clear, size: CGSize(width: 140, height: 180))
+        physicsBody = SKPhysicsBody(rectangleOf: self.size)
         physicsBody?.affectedByGravity = false
         physicsBody?.linearDamping = 0
         physicsBody?.allowsRotation = false
@@ -92,10 +91,9 @@ class Enemy: SKSpriteNode {
 class Bullet: SKSpriteNode {
     
     init(at position: CGPoint, with rotation: CGFloat) {
-        super.init(texture: SKTexture(imageNamed: "Bullet"), color: UIColor.clear, size: SKTexture(imageNamed: "Bullet").size())
+        super.init(texture: SKTexture(imageNamed: "Bullet"), color: UIColor.clear, size: CGSize(width: 42, height: 56))
         self.zRotation = rotation
         self.position = CGPoint(x: position.x - 50*sin(self.zRotation), y: position.y + 50*cos(self.zRotation))
-        self.setScale(0.08)
         physicsBody = SKPhysicsBody(rectangleOf: self.size)
         physicsBody?.affectedByGravity = false
         physicsBody?.linearDamping = 0
@@ -123,7 +121,7 @@ class Bullet: SKSpriteNode {
 class EnemyBullet: Bullet {
     override init(at position: CGPoint, with rotation: CGFloat) {
         super.init(at: position, with: rotation)
-        self.position = CGPoint(x: position.x - 300*sin(self.zRotation), y: position.y + 300*cos(self.zRotation))
+        self.position = CGPoint(x: position.x - 120*sin(self.zRotation), y: position.y + 120*cos(self.zRotation))
         physicsBody?.categoryBitMask = (currentScene?.EnemyBulletCategory)!
         physicsBody?.collisionBitMask = 0
         physicsBody?.contactTestBitMask = (currentScene?.PlayerCategory)! | (currentScene?.BulletCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.EnemyBulletCategory)!
