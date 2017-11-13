@@ -22,6 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var touch, touchR: UITouch?
     var yzero: CGFloat = 0
     var xzero: CGFloat = 0
+    var player2 = Player ()
     var player: SKSpriteNode?
     
     private var lastUpdateTime : TimeInterval = 0
@@ -34,6 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player = childNode(withName: "TankPlayer") as? SKSpriteNode
         player?.physicsBody?.categoryBitMask = PlayerCategory
         player?.physicsBody?.collisionBitMask = EnemyCategory
+        
         for i in 0...2 {
             spawnEnemy(i)
         }
