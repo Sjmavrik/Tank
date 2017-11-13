@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-var currentScene = SKScene()
+weak var currentScene: GameScene?
 
 class GameViewController: UIViewController {
 

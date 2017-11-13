@@ -128,6 +128,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             (firstBody.node as! Bullet).destroy()
             (secondBody.node as! Enemy).destroy()
         }
+        if firstBody.categoryBitMask == BulletCategory && secondBody.categoryBitMask == EnemyBulletCategory {
+            (firstBody.node as! Bullet).destroy()
+            (secondBody.node as! EnemyBullet).destroy()
+        }
+        if firstBody.categoryBitMask == PlayerCategory && secondBody.categoryBitMask == EnemyBulletCategory {
+            //(firstBody.node as! Bullet).destroy()
+            (secondBody.node as! EnemyBullet).destroy()
+        }
+        if firstBody.categoryBitMask == EnemyCategory && secondBody.categoryBitMask == EnemyBulletCategory {
+            (secondBody.node as! EnemyBullet).destroy()
+        }
+        if firstBody.categoryBitMask == EnemyBulletCategory && secondBody.categoryBitMask == EnemyBulletCategory {
+            (firstBody.node as! EnemyBullet).destroy()
+            (secondBody.node as! EnemyBullet).destroy()
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {
