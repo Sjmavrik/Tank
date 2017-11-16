@@ -17,6 +17,7 @@
 		11ABF6891F9F6259007B1351 /* TankTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ABF6881F9F6259007B1351 /* TankTests.swift */; };
 		11ABF6941F9F6259007B1351 /* TankUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ABF6931F9F6259007B1351 /* TankUITests.swift */; };
 		11F833901FBA075E00F9CF41 /* PlayerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F8338F1FBA075E00F9CF41 /* PlayerClass.swift */; };
+		11F941651FBE0A33007F5286 /* SceneGameOver.sks in Resources */ = {isa = PBXBuildFile; fileRef = 11F941641FBE0A33007F5286 /* SceneGameOver.sks */; };
 		4D7D50DC1F9F999C005D6F09 /* MyTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4D7D50DB1F9F999C005D6F09 /* MyTileSet.sks */; };
 		4D920F561FA52CEA00D5BB4D /* EnemyClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D920F551FA52CEA00D5BB4D /* EnemyClass.swift */; };
 		4D9387611FA3F3AE00984096 /* GameScene2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4D9387601FA3F3AE00984096 /* GameScene2.sks */; };
@@ -56,6 +57,7 @@
 		11ABF6931F9F6259007B1351 /* TankUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TankUITests.swift; sourceTree = "<group>"; };
 		11ABF6951F9F6259007B1351 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11F8338F1FBA075E00F9CF41 /* PlayerClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerClass.swift; sourceTree = "<group>"; };
+		11F941641FBE0A33007F5286 /* SceneGameOver.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SceneGameOver.sks; sourceTree = "<group>"; };
 		4D7D50DB1F9F999C005D6F09 /* MyTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyTileSet.sks; sourceTree = "<group>"; };
 		4D920F551FA52CEA00D5BB4D /* EnemyClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyClass.swift; sourceTree = "<group>"; };
 		4D9387601FA3F3AE00984096 /* GameScene2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene2.sks; sourceTree = "<group>"; };
@@ -112,10 +114,9 @@
 				11ABF67A1F9F6259007B1351 /* Assets.xcassets */,
 				11ABF66D1F9F6259007B1351 /* AppDelegate.swift */,
 				11F833921FBA07B200F9CF41 /* Classes */,
-				11ABF66F1F9F6259007B1351 /* GameScene.sks */,
-				4D9387601FA3F3AE00984096 /* GameScene2.sks */,
-				11ABF6731F9F6259007B1351 /* GameScene.swift */,
+				11F941661FBE0A3C007F5286 /* Scenes */,
 				11ABF6751F9F6259007B1351 /* GameViewController.swift */,
+				11ABF6731F9F6259007B1351 /* GameScene.swift */,
 				11ABF67F1F9F6259007B1351 /* Info.plist */,
 				11ABF67C1F9F6259007B1351 /* LaunchScreen.storyboard */,
 				11ABF6771F9F6259007B1351 /* Main.storyboard */,
@@ -149,6 +150,16 @@
 				11F8338F1FBA075E00F9CF41 /* PlayerClass.swift */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		11F941661FBE0A3C007F5286 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				11ABF66F1F9F6259007B1351 /* GameScene.sks */,
+				4D9387601FA3F3AE00984096 /* GameScene2.sks */,
+				11F941641FBE0A33007F5286 /* SceneGameOver.sks */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +272,7 @@
 				11ABF6791F9F6259007B1351 /* Main.storyboard in Resources */,
 				11ABF6701F9F6259007B1351 /* GameScene.sks in Resources */,
 				4D7D50DC1F9F999C005D6F09 /* MyTileSet.sks in Resources */,
+				11F941651FBE0A33007F5286 /* SceneGameOver.sks in Resources */,
 				11ABF67B1F9F6259007B1351 /* Assets.xcassets in Resources */,
 				11ABF67E1F9F6259007B1351 /* LaunchScreen.storyboard in Resources */,
 				4D9387611FA3F3AE00984096 /* GameScene2.sks in Resources */,

@@ -14,16 +14,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let BulletCategory : UInt32 = 0x1 << 1
     let EnemyCategory  : UInt32 = 0x1 << 2
     let EnemyBulletCategory : UInt32 = 0x1 << 3
-    var playerVelocityVector = CGVector()
+    let EagleCategory : UInt32 = 0x1 << 4
     var i = 0
-    var timerRepeatFire = Timer()
     var moving: Bool = false
     var shooting: Bool = false
     var touch, touchR: UITouch?
     var yzero: CGFloat = 0
     var xzero: CGFloat = 0
-    var player2 = Player ()
-    var player: SKSpriteNode?
+    var player : Player!
+//    var player: SKSpriteNode?
     
     private var lastUpdateTime : TimeInterval = 0
     var entities = [GKEntity]()
@@ -32,10 +31,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func didMove(to view: SKView) {
-        player = childNode(withName: "TankPlayer") as? SKSpriteNode
-        player?.physicsBody?.categoryBitMask = PlayerCategory
-        player?.physicsBody?.collisionBitMask = EnemyCategory
-        
+//        player = childNode(withName: "TankPlayer") as? SKSpriteNode
+//        player?.physicsBody?.categoryBitMask = PlayerCategory
+//        player?.physicsBody?.collisionBitMask = EnemyCategory
+        player = Player ()
+        let _ = Eagle ()
+        player.position = CGPoint (x: -100, y: -815)
         for i in 0...2 {
             spawnEnemy(i)
         }
@@ -54,10 +55,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.spawn(at: i)
     }
     
-    @objc func shoot() {
-        timerRepeatFire = Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(shoot), userInfo: nil, repeats: false)
-        _ = Bullet(at: (player?.position)!, with: (player?.zRotation)!)
+    func gameOver() {
+       view?.presentScene(SKScene(fileNamed: "SceneGameOver"))
     }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if (touches.first?.location(in: self).x)! < 0 {
@@ -71,7 +72,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if shooting == false {
                 shooting = true
                 touchR = touches.first
-                shoot ()
+                player.shoot()
+                
             }
         }
     }
@@ -83,17 +85,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let dx = (touches.first?.location(in: self).x)! - xzero
             let dy = (touches.first?.location(in: self).y)! - yzero
             if tlx! > xzero && abs(dx) - abs(dy) > 50 {
-                player?.zRotation = -90 * CGFloat.pi / 180
-                playerVelocityVector = CGVector(dx: 200, dy: 0)
+                player.zRotation = -90 * CGFloat.pi / 180
+                player.playerVelocityVector = CGVector(dx: 200, dy: 0)
             } else if tlx! < xzero && abs(dx) - abs(dy) > 50 {
-                player?.zRotation = 90 * CGFloat.pi / 180
-                playerVelocityVector = CGVector(dx: -200, dy: 0)
+                player.zRotation = 90 * CGFloat.pi / 180
+                player.playerVelocityVector = CGVector(dx: -200, dy: 0)
             } else if tly! > yzero && abs(dy) - abs(dx) > 50 {
-                player?.zRotation = 0 * CGFloat.pi / 180
-                playerVelocityVector = CGVector(dx: 0, dy: 200)
+                player.zRotation = 0 * CGFloat.pi / 180
+                player.playerVelocityVector = CGVector(dx: 0, dy: 200)
             } else if tly! < yzero && abs(dy) - abs(dx) > 50 {
-                player?.zRotation = 180 * CGFloat.pi / 180
-                playerVelocityVector = CGVector(dx: 0, dy: -200)
+                player.zRotation = 180 * CGFloat.pi / 180
+                player.playerVelocityVector = CGVector(dx: 0, dy: -200)
             }
         }
     }
@@ -101,18 +103,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if touch == touches.first {
             moving = false
-            playerVelocityVector = CGVector (dx: 0, dy: 0)
+            player.playerVelocityVector = CGVector (dx: 0, dy: 0)
         } else if touchR == touches.first {
             shooting = false
-            timerRepeatFire.invalidate()
+            player.timerRepeatFire.invalidate()
         }
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
             moving = false
-            playerVelocityVector = CGVector (dx: 0, dy: 0)
+            player.playerVelocityVector = CGVector (dx: 0, dy: 0)
             shooting = false
-            timerRepeatFire.invalidate()
+            player.timerRepeatFire.invalidate()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -145,6 +147,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             (firstBody.node as! EnemyBullet).destroy()
             (secondBody.node as! EnemyBullet).destroy()
         }
+        if firstBody.categoryBitMask == PlayerCategory && secondBody.categoryBitMask == EnemyBulletCategory {
+            (firstBody.node as! Player).destroy()
+            (secondBody.node as! EnemyBullet).destroy()
+        }
+        if firstBody.categoryBitMask == EnemyBulletCategory && secondBody.categoryBitMask == EagleCategory {
+//            (firstBody.node as! EnemyBullet).destroy()
+            gameOver()
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -164,7 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.lastUpdateTime = currentTime
         
-        player?.physicsBody?.velocity = playerVelocityVector
+        player.physicsBody?.velocity = player.playerVelocityVector
         
         //scene change
         
@@ -176,7 +186,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         if enemies.count == 0 {
-            timerRepeatFire.invalidate()
+            player.timerRepeatFire.invalidate()
             view?.presentScene(GameScene(fileNamed: "GameScene2"))
         }
     }
