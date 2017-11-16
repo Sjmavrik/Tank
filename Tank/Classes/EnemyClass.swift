@@ -90,7 +90,7 @@ class Enemy: SKSpriteNode {
 class EnemyBullet: Bullet {
     override init(at position: CGPoint, with rotation: CGFloat) {
         super.init(at: position, with: rotation)
-        self.position = CGPoint(x: position.x - 300*sin(self.zRotation), y: position.y + 300*cos(self.zRotation))
+        self.position = CGPoint(x: position.x - 120*sin(self.zRotation), y: position.y + 120*cos(self.zRotation))
         physicsBody?.categoryBitMask = (currentScene?.EnemyBulletCategory)!
         physicsBody?.collisionBitMask = 0
         physicsBody?.contactTestBitMask = (currentScene?.PlayerCategory)! | (currentScene?.BulletCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.EnemyBulletCategory)!
