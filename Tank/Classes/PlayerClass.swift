@@ -26,7 +26,7 @@ class Player: SKSpriteNode {
         physicsBody?.usesPreciseCollisionDetection = false
         physicsBody?.restitution = 0
         physicsBody?.categoryBitMask = (currentScene?.PlayerCategory)!
-        physicsBody?.collisionBitMask = (currentScene?.PlayerCategory)! | (currentScene?.EnemyCategory)!
+        physicsBody?.collisionBitMask = (currentScene?.PlayerCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.EagleCategory)!
         physicsBody?.contactTestBitMask = (currentScene?.EnemyBulletCategory)!
         currentScene?.addChild(self)
     }
@@ -41,10 +41,10 @@ class Player: SKSpriteNode {
     func destroy() {
         hp -= 1
         print("\(hp)")
-        hpBar.text = String(hp)
-//       if hp <= 0 {
-//           currentScene?.gameOver()
-//        }
+        hpBar.text = ("HP = \(hp)")
+        if hp <= 0 {
+           currentScene?.gameOver()
+        }
     }
 }
 // Пулька игрока
@@ -63,7 +63,7 @@ class Bullet: SKSpriteNode {
         physicsBody?.restitution = 0
         physicsBody?.collisionBitMask = 0
         physicsBody?.categoryBitMask = (currentScene?.BulletCategory)!
-        physicsBody?.contactTestBitMask = (currentScene?.EnemyCategory)! | (currentScene?.EnemyBulletCategory)!
+        physicsBody?.contactTestBitMask = (currentScene?.EnemyCategory)! | (currentScene?.EnemyBulletCategory)! | (currentScene?.EagleCategory)!
         currentScene?.addChild(self)
         physicsBody?.velocity = CGVector(dx: -1000*sin(self.zRotation), dy: 1000*cos(self.zRotation))
         _ = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(destroy), userInfo: nil, repeats: false)
@@ -89,7 +89,7 @@ class Eagle: SKSpriteNode {
         physicsBody?.restitution = 0
         physicsBody?.isDynamic = false
         physicsBody?.categoryBitMask = (currentScene?.EagleCategory)!
-        physicsBody?.contactTestBitMask = (currentScene?.EnemyBulletCategory)!
+        physicsBody?.contactTestBitMask = (currentScene?.EnemyBulletCategory)! | (currentScene?.BulletCategory)!
         position = CGPoint (x: 0, y: -815)
         currentScene?.addChild(self)
     }

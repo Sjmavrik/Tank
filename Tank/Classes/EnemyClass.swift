@@ -74,7 +74,6 @@ class Enemy: SKSpriteNode {
     
     func destroy() {
         hp -= 1
-        print("\(hp)")
         if hp <= 0 {
             removeFromParent()
             moveTimer.invalidate()
@@ -93,7 +92,7 @@ class EnemyBullet: Bullet {
         self.position = CGPoint(x: position.x - 300*sin(self.zRotation), y: position.y + 300*cos(self.zRotation))
         physicsBody?.categoryBitMask = (currentScene?.EnemyBulletCategory)!
         physicsBody?.collisionBitMask = 0
-        physicsBody?.contactTestBitMask = (currentScene?.PlayerCategory)! | (currentScene?.BulletCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.EnemyBulletCategory)!
+        physicsBody?.contactTestBitMask = (currentScene?.PlayerCategory)! | (currentScene?.BulletCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.EnemyBulletCategory)! | (currentScene?.EagleCategory)!
     }
     
     required init?(coder aDecoder: NSCoder) {

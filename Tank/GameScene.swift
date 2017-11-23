@@ -22,7 +22,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var yzero: CGFloat = 0
     var xzero: CGFloat = 0
     var player : Player!
-//    var player: SKSpriteNode?
     
     private var lastUpdateTime : TimeInterval = 0
     var entities = [GKEntity]()
@@ -31,12 +30,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func didMove(to view: SKView) {
-//        player = childNode(withName: "TankPlayer") as? SKSpriteNode
-//        player?.physicsBody?.categoryBitMask = PlayerCategory
-//        player?.physicsBody?.collisionBitMask = EnemyCategory
         player = Player ()
         let _ = Eagle ()
-        player.position = CGPoint (x: -100, y: -815)
+        player.position = CGPoint (x: -150, y: -815)
         for i in 0...2 {
             spawnEnemy(i)
         }
@@ -56,7 +52,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func gameOver() {
-       view?.presentScene(SKScene(fileNamed: "SceneGameOver"))
+        for child in children {
+            (child as? Enemy)?.moveTimer.invalidate()
+            (child as? Enemy)?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        }
+        run(SKAction.sequence([SKAction.wait(forDuration: 0.1), SKAction.run({self.view?.presentScene(MenuScene(fileNamed: "SceneGameOver"))})]))
     }
     
     
@@ -151,8 +151,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             (firstBody.node as! Player).destroy()
             (secondBody.node as! EnemyBullet).destroy()
         }
-        if firstBody.categoryBitMask == EnemyBulletCategory && secondBody.categoryBitMask == EagleCategory {
-//            (firstBody.node as! EnemyBullet).destroy()
+        if (firstBody.categoryBitMask == EnemyBulletCategory || firstBody.categoryBitMask == BulletCategory) && secondBody.categoryBitMask == EagleCategory {
+            (firstBody.node as? Bullet)?.destroy()
+            (firstBody.node as? EnemyBullet)?.destroy()
             gameOver()
         }
     }
@@ -187,7 +188,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if enemies.count == 0 {
             player.timerRepeatFire.invalidate()
-            view?.presentScene(GameScene(fileNamed: "GameScene2"))
+            view?.presentScene(MenuScene(fileNamed: "SceneLevelComplete"))
         }
     }
 }
