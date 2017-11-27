@@ -15,6 +15,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let EnemyCategory  : UInt32 = 0x1 << 2
     let EnemyBulletCategory : UInt32 = 0x1 << 3
     let EagleCategory : UInt32 = 0x1 << 4
+    let BoostCategory : UInt32 = 0x1 << 5
     var i = 0
     var moving: Bool = false
     var shooting: Bool = false
@@ -32,6 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         player = Player ()
         let _ = Eagle ()
+        let _ = BoostClass ()
         player.position = CGPoint (x: -150, y: -815)
         for i in 0...2 {
             spawnEnemy(i)
@@ -86,16 +88,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let dy = (touches.first?.location(in: self).y)! - yzero
             if tlx! > xzero && abs(dx) - abs(dy) > 50 {
                 player.zRotation = -90 * CGFloat.pi / 180
-                player.playerVelocityVector = CGVector(dx: 200, dy: 0)
+                player.playerVelocityVector = CGVector(dx: 200*player.velocityMultiplier, dy: 0)
             } else if tlx! < xzero && abs(dx) - abs(dy) > 50 {
                 player.zRotation = 90 * CGFloat.pi / 180
-                player.playerVelocityVector = CGVector(dx: -200, dy: 0)
+                player.playerVelocityVector = CGVector(dx: -200*player.velocityMultiplier, dy: 0)
             } else if tly! > yzero && abs(dy) - abs(dx) > 50 {
                 player.zRotation = 0 * CGFloat.pi / 180
-                player.playerVelocityVector = CGVector(dx: 0, dy: 200)
+                player.playerVelocityVector = CGVector(dx: 0, dy: 200*player.velocityMultiplier)
             } else if tly! < yzero && abs(dy) - abs(dx) > 50 {
                 player.zRotation = 180 * CGFloat.pi / 180
-                player.playerVelocityVector = CGVector(dx: 0, dy: -200)
+                player.playerVelocityVector = CGVector(dx: 0, dy: -200*player.velocityMultiplier)
             }
         }
     }
@@ -151,11 +153,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             (firstBody.node as! Player).destroy()
             (secondBody.node as! EnemyBullet).destroy()
         }
+        if firstBody.categoryBitMask == PlayerCategory && secondBody.categoryBitMask == BoostCategory {
+            (secondBody.node as! BoostClass).applyBoost()
+        }
         if (firstBody.categoryBitMask == EnemyBulletCategory || firstBody.categoryBitMask == BulletCategory) && secondBody.categoryBitMask == EagleCategory {
             (firstBody.node as? Bullet)?.destroy()
             (firstBody.node as? EnemyBullet)?.destroy()
             gameOver()
         }
+        
     }
     
     override func update(_ currentTime: TimeInterval) {

@@ -10,8 +10,15 @@ import SpriteKit
 
 class MenuScene: SKScene {
     
+    var start : SKLabelNode?
+    
     override func sceneDidLoad() {
         scaleMode = .aspectFit
+        start = childNode(withName: "RESTART") as? SKLabelNode
     }
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (start?.contains((touches.first?.location(in: self))!))! {
+           view?.presentScene(GameScene(fileNamed: "GameScene"))
+        }
+    }
 }

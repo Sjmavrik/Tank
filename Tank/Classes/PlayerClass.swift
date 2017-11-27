@@ -14,7 +14,7 @@ class Player: SKSpriteNode {
     var timer = Timer ()
     var timerRepeatFire = Timer()
     var playerVelocityVector = CGVector ()
-    
+    var velocityMultiplier = 1
     
     init() {
         let texture = SKTexture (imageNamed: "TTank")
