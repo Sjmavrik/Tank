@@ -12,7 +12,7 @@ class BoostClass: SKSpriteNode {
     var random: UInt32
     var timer = Timer()
     init() {
-        random = arc4random_uniform(3)
+        random = arc4random_uniform(4)
         let boost = SKTexture (imageNamed: "up")
         super.init(texture: boost, color: UIColor.clear, size: CGSize(width: 180, height: 180))
         switch random {
@@ -34,13 +34,23 @@ class BoostClass: SKSpriteNode {
         physicsBody?.isDynamic = false
         physicsBody?.categoryBitMask = (currentScene?.BoostCategory)!
         physicsBody?.contactTestBitMask = (currentScene?.PlayerCategory)!
-        position = CGPoint (x: 0, y: -515)
+        position = CGPoint (x: Int(arc4random_uniform(1868)) - 933,
+                            y: Int(arc4random_uniform(1868)) - 933)
         currentScene?.addChild(self)
         
     }
     func applyBoost () {
-        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(removeBoost), userInfo: nil, repeats: false)
-        currentScene?.player.velocityMultiplier = 5
+        switch random {
+        case 0:
+            currentScene?.player.hp += 100
+            hpBar.text = ("HP = \(currentScene!.player.hp)")
+        case 3:
+            timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(removeBoost), userInfo: nil, repeats: false)
+            currentScene?.player.velocityMultiplier = 5
+        default:
+            break
+        }
+        
         removeFromParent()
     }
     //Удаление буста

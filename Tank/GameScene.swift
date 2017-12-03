@@ -31,7 +31,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func didMove(to view: SKView) {
+        
         player = Player ()
+        hpBar.text = "HP = \(player.hp)"
         let _ = Eagle ()
         let _ = BoostClass ()
         player.position = CGPoint (x: -150, y: -815)
@@ -54,6 +56,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func gameOver() {
+        
+        player.timerRepeatFire.invalidate()
+
         for child in children {
             (child as? Enemy)?.moveTimer.invalidate()
             (child as? Enemy)?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
