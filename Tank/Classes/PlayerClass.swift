@@ -90,7 +90,7 @@ class Eagle: SKSpriteNode {
         physicsBody?.isDynamic = false
         physicsBody?.categoryBitMask = (currentScene?.EagleCategory)!
         physicsBody?.contactTestBitMask = (currentScene?.EnemyBulletCategory)! | (currentScene?.BulletCategory)!
-        position = CGPoint (x: 0, y: -815)
+        position = CGPoint (x: 0, y: -929)
         currentScene?.addChild(self)
     }
     

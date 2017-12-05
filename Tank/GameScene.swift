@@ -23,6 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var yzero: CGFloat = 0
     var xzero: CGFloat = 0
     var player : Player!
+    var tileMap : SKTileMapNode!
     
     private var lastUpdateTime : TimeInterval = 0
     var entities = [GKEntity]()
@@ -36,7 +37,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hpBar.text = "HP = \(player.hp)"
         let _ = Eagle ()
         let _ = BoostClass ()
-        player.position = CGPoint (x: -150, y: -815)
+        player.position = CGPoint (x: -300, y: -929)
         for i in 0...2 {
             spawnEnemy(i)
         }
@@ -166,6 +167,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             (firstBody.node as? EnemyBullet)?.destroy()
             gameOver()
         }
+        
+    }
+    func tileSetProcessing() {
+        tileMap = childNode(withName: "LevelMap") as! SKTileMapNode
+        
+        let tileSize = tileMap.tileSize
+        let halfWidth = CGFloat(tileMap.numberOfColumns) / 2.0 * tileSize.width
+        let halfHeight = CGFloat(tileMap.numberOfRows) / 2.0 * tileSize.height
+        
+        for col in 0..<tileMap.numberOfColumns {
+            for row in 0..<tileMap.numberOfRows {
+                let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
+                let isEdgeTile = tileDefinition?.userData?["edgeTile"] as? Bool
+                if (isEdgeTile ?? false) {
+                    let x = CGFloat(col) * tileSize.width - halfWidth
+                    let y = CGFloat(row) * tileSize.height - halfHeight
+                    let rect = CGRect(x: 0, y: 0, width: tileSize.width, height: tileSize.height)
+                    let tileNode = SKShapeNode(rect: rect)
+                    tileNode.position = CGPoint(x: x, y: y)
+                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
+                    tileNode.physicsBody?.isDynamic = false
+                    tileNode.physicsBody?.collisionBitMask = playerCollisionMask | wallCollisionMask
+                    tileNode.physicsBody?.categoryBitMask = wallCollisionMask
+                    tileMap.addChild(tileNode)
+                }
+            }
+        }  
         
     }
     
