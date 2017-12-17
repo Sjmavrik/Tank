@@ -16,6 +16,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let EnemyBulletCategory : UInt32 = 0x1 << 3
     let EagleCategory : UInt32 = 0x1 << 4
     let BoostCategory : UInt32 = 0x1 << 5
+    let BrickCategory : UInt32 = 0x1 << 6
     var i = 0
     var moving: Bool = false
     var shooting: Bool = false
@@ -32,7 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func didMove(to view: SKView) {
-        
+        tileSetProcessing() 
         player = Player ()
         hpBar.text = "HP = \(player.hp)"
         let _ = Eagle ()
@@ -179,7 +180,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for col in 0..<tileMap.numberOfColumns {
             for row in 0..<tileMap.numberOfRows {
                 let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
-                let isEdgeTile = tileDefinition?.userData?["edgeTile"] as? Bool
+                let isEdgeTile = tileDefinition?.userData?["isSteel"] as? Bool
                 if (isEdgeTile ?? false) {
                     let x = CGFloat(col) * tileSize.width - halfWidth
                     let y = CGFloat(row) * tileSize.height - halfHeight
@@ -188,8 +189,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     tileNode.position = CGPoint(x: x, y: y)
                     tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
                     tileNode.physicsBody?.isDynamic = false
-                    tileNode.physicsBody?.collisionBitMask = playerCollisionMask | wallCollisionMask
-                    tileNode.physicsBody?.categoryBitMask = wallCollisionMask
+                    //tileNode.physicsBody?.collisionBitMask = 0
+                    tileNode.physicsBody?.categoryBitMask = BrickCategory
                     tileMap.addChild(tileNode)
                 }
             }
