@@ -17,6 +17,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let EagleCategory : UInt32 = 0x1 << 4
     let BoostCategory : UInt32 = 0x1 << 5
     let SteelCategory : UInt32 = 0x1 << 6
+    let BrickCategory : UInt32 = 0x1 << 7
     var i = 0
     var moving: Bool = false
     var shooting: Bool = false
@@ -168,7 +169,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             (firstBody.node as? EnemyBullet)?.destroy()
             gameOver()
         }
-        
+        if (firstBody.categoryBitMask == EnemyBulletCategory || firstBody.categoryBitMask == BulletCategory) && secondBody.categoryBitMask == SteelCategory {
+            (firstBody.node as? Bullet)?.destroy()
+            (firstBody.node as? EnemyBullet)?.destroy()
+        }
+        if (firstBody.categoryBitMask == EnemyBulletCategory || firstBody.categoryBitMask == BulletCategory) && secondBody.categoryBitMask == BrickCategory {
+            (firstBody.node as? Bullet)?.destroy()
+            (firstBody.node as? EnemyBullet)?.destroy()
+            secondBody.node?.removeFromParent()
+        }
     }
     func tileSetProcessing() {
         tileMap = childNode(withName: "LevelMap") as! SKTileMapNode
@@ -180,18 +189,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for col in 0..<tileMap.numberOfColumns {
             for row in 0..<tileMap.numberOfRows {
                 let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
-                let isEdgeTile = tileDefinition?.userData?["isSteel"] as? Bool
-                if (isEdgeTile ?? false) {
-                    let x = CGFloat(col) * tileSize.width - halfWidth
-                    let y = CGFloat(row) * tileSize.height - halfHeight
-                    let rect = CGRect(x: 0, y: 0, width: tileSize.width, height: tileSize.height)
-                    let tileNode = SKShapeNode(rect: rect)
+                let isSteelTile = tileDefinition?.userData?["isSteel"] as? Bool
+                let isBrickTile = tileDefinition?.userData?["isBrick"] as? Bool
+                if (isSteelTile ?? false) {
+                    let x = CGFloat(col) * tileSize.width - halfWidth + tileSize.width / 2.0
+                    let y = CGFloat(row) * tileSize.height - halfHeight + tileSize.height / 2.0
+                    let tileNode = SKSpriteNode(texture: SKTexture(imageNamed: "Cobblestone_Grid_Center"), size: tileSize)
                     tileNode.position = CGPoint(x: x, y: y)
-                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
+                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize)
                     tileNode.physicsBody?.isDynamic = false
                     //tileNode.physicsBody?.collisionBitMask = 0
                     tileNode.physicsBody?.categoryBitMask = SteelCategory
-                    tileMap.addChild(tileNode)
+                    addChild(tileNode)
+                }
+                if (isBrickTile ?? false) {
+                    let x = CGFloat(col) * tileSize.width - halfWidth + tileSize.width / 2.0
+                    let y = CGFloat(row) * tileSize.height - halfHeight + tileSize.height / 2.0
+                    let tileNode = SKSpriteNode(texture: SKTexture(imageNamed: "Sand_Grid_Center"), size: tileSize)
+                    tileNode.position = CGPoint(x: x, y: y)
+                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize)
+                    tileNode.physicsBody?.isDynamic = false
+                    //tileNode.physicsBody?.collisionBitMask = 0
+                    tileNode.physicsBody?.categoryBitMask = BrickCategory
+                    addChild(tileNode)
                 }
             }
         }  

@@ -26,7 +26,7 @@ class Player: SKSpriteNode {
         physicsBody?.usesPreciseCollisionDetection = false
         physicsBody?.restitution = 0
         physicsBody?.categoryBitMask = (currentScene?.PlayerCategory)!
-        physicsBody?.collisionBitMask = (currentScene?.PlayerCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.EagleCategory)! | (currentScene?.SteelCategory)!
+        physicsBody?.collisionBitMask = (currentScene?.PlayerCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.EagleCategory)! | (currentScene?.SteelCategory)! | (currentScene?.BrickCategory)!
         physicsBody?.contactTestBitMask = (currentScene?.EnemyBulletCategory)!
         currentScene?.addChild(self)
     }
@@ -63,7 +63,7 @@ class Bullet: SKSpriteNode {
         physicsBody?.restitution = 0
         physicsBody?.collisionBitMask = 0
         physicsBody?.categoryBitMask = (currentScene?.BulletCategory)!
-        physicsBody?.contactTestBitMask = (currentScene?.EnemyCategory)! | (currentScene?.EnemyBulletCategory)! | (currentScene?.EagleCategory)!
+        physicsBody?.contactTestBitMask = (currentScene?.EnemyCategory)! | (currentScene?.EnemyBulletCategory)! | (currentScene?.EagleCategory)! | (currentScene?.SteelCategory)! | (currentScene?.BrickCategory)!
         currentScene?.addChild(self)
         physicsBody?.velocity = CGVector(dx: -1000*sin(self.zRotation), dy: 1000*cos(self.zRotation))
         _ = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(destroy), userInfo: nil, repeats: false)

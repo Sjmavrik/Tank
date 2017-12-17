@@ -32,7 +32,7 @@ class Enemy: SKSpriteNode {
         physicsBody?.usesPreciseCollisionDetection = false
         physicsBody?.restitution = 0
         physicsBody?.categoryBitMask = (currentScene?.EnemyCategory)!
-        physicsBody?.collisionBitMask = (currentScene?.PlayerCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.SteelCategory)!
+        physicsBody?.collisionBitMask = (currentScene?.PlayerCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.SteelCategory)! | (currentScene?.BrickCategory)!
         physicsBody?.contactTestBitMask = (currentScene?.BulletCategory)!
         moveTimer = Timer.scheduledTimer(timeInterval: TimeInterval(arc4random_uniform(3)+1), target: self, selector: #selector(movementDirection), userInfo: nil, repeats: false)
     }
@@ -89,10 +89,10 @@ class Enemy: SKSpriteNode {
 class EnemyBullet: Bullet {
     override init(at position: CGPoint, with rotation: CGFloat) {
         super.init(at: position, with: rotation)
-        self.position = CGPoint(x: position.x - 300*sin(self.zRotation), y: position.y + 300*cos(self.zRotation))
+        self.position = CGPoint(x: position.x - 119*sin(self.zRotation), y: position.y + 119*cos(self.zRotation))
         physicsBody?.categoryBitMask = (currentScene?.EnemyBulletCategory)!
         physicsBody?.collisionBitMask = 0
-        physicsBody?.contactTestBitMask = (currentScene?.PlayerCategory)! | (currentScene?.BulletCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.EnemyBulletCategory)! | (currentScene?.EagleCategory)!
+        physicsBody?.contactTestBitMask = (currentScene?.PlayerCategory)! | (currentScene?.BulletCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.EnemyBulletCategory)! | (currentScene?.EagleCategory)! | (currentScene?.SteelCategory)! | (currentScene?.BrickCategory)!
     }
     
     required init?(coder aDecoder: NSCoder) {
