@@ -26,7 +26,7 @@ class Player: SKSpriteNode {
         physicsBody?.usesPreciseCollisionDetection = false
         physicsBody?.restitution = 0
         physicsBody?.categoryBitMask = (currentScene?.PlayerCategory)!
-        physicsBody?.collisionBitMask = (currentScene?.PlayerCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.EagleCategory)! | (currentScene?.BrickCategory)!
+        physicsBody?.collisionBitMask = (currentScene?.PlayerCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.EagleCategory)! | (currentScene?.SteelCategory)!
         physicsBody?.contactTestBitMask = (currentScene?.EnemyBulletCategory)!
         currentScene?.addChild(self)
     }

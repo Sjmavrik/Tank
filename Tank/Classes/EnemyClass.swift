@@ -32,7 +32,7 @@ class Enemy: SKSpriteNode {
         physicsBody?.usesPreciseCollisionDetection = false
         physicsBody?.restitution = 0
         physicsBody?.categoryBitMask = (currentScene?.EnemyCategory)!
-        physicsBody?.collisionBitMask = (currentScene?.PlayerCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.BrickCategory)!
+        physicsBody?.collisionBitMask = (currentScene?.PlayerCategory)! | (currentScene?.EnemyCategory)! | (currentScene?.SteelCategory)!
         physicsBody?.contactTestBitMask = (currentScene?.BulletCategory)!
         moveTimer = Timer.scheduledTimer(timeInterval: TimeInterval(arc4random_uniform(3)+1), target: self, selector: #selector(movementDirection), userInfo: nil, repeats: false)
     }

@@ -16,7 +16,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let EnemyBulletCategory : UInt32 = 0x1 << 3
     let EagleCategory : UInt32 = 0x1 << 4
     let BoostCategory : UInt32 = 0x1 << 5
-    let BrickCategory : UInt32 = 0x1 << 6
+    let SteelCategory : UInt32 = 0x1 << 6
     var i = 0
     var moving: Bool = false
     var shooting: Bool = false
@@ -190,7 +190,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
                     tileNode.physicsBody?.isDynamic = false
                     //tileNode.physicsBody?.collisionBitMask = 0
-                    tileNode.physicsBody?.categoryBitMask = BrickCategory
+                    tileNode.physicsBody?.categoryBitMask = SteelCategory
                     tileMap.addChild(tileNode)
                 }
             }
